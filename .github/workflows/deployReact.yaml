@@ -15,6 +15,7 @@ jobs:
       - name: Run tests
         run: npm test
   Deploy:
+    needs: test
     runs-on: ubuntu
     steps:
       - name: Checkout
