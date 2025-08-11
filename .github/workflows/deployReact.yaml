@@ -25,7 +25,7 @@ jobs:
         run: npm install
       - name: Run tests
         run: npm test
-  Deploy:
+  build:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -44,5 +44,19 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Upload Dist Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+  Deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Dist Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
       - name: Deploy
         run: echo "Successfully Deployed"
